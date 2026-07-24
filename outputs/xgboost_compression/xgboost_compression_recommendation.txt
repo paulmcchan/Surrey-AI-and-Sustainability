@@ -1,0 +1,25 @@
+XGBoost Compression - Final Summary
+=====================================
+
+Baseline model: 118.2 KB, Test MAE 29,691, MAPE 4.88%
+
+Technique 1 (Tree reduction, 86/122 trees):
+  Size: 62.5 KB (-47.1%)
+  Test MAE: 28,090 (-5.4%)
+
+Technique 2 (Precision reduction, -2 decimals):
+  Size: 95.5 KB (-19.2%)
+  Test MAE: 29,746 (+0.2%)
+
+Combination (Tree + Precision reduction):
+  Size: 67.7 KB (-42.7%)
+  Test MAE: 28,145 (-5.2%)
+
+RECOMMENDATION: Technique 1 (tree reduction alone) is the final recommended
+compressed model. It dominates on both size and test accuracy; combining it
+with precision reduction adds no net benefit once JSON serialization overhead
+is accounted for. Saved as xgboost_final_compressed_model.json.
+
+Note: given the baseline model's already small footprint (118.2 KB), the
+practical value of this compression exercise is primarily methodological
+rather than a real deployment requirement.
