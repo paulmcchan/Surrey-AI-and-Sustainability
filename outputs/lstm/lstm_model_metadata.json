@@ -1,0 +1,29 @@
+{
+  "model_type": "LSTM (Keras Sequential)",
+  "tensorflow_version": "2.20.0",
+  "hyperparameters": {
+    "lstm_units": 256,
+    "dropout": 0.5,
+    "learning_rate": 0.0005,
+    "epochs": 79
+  },
+  "training_data": "train + validation combined (2009-01-01 to 2022-12-31, windowed)",
+  "training_rows": 5054,
+  "test_period": "2023-01-01 to 2024-06-11",
+  "test_rows": 528,
+  "final_training_time_seconds": 84.512,
+  "test_set_metrics": {
+    "mae": 14853.98,
+    "rmse": 19235.87,
+    "mape": 2.386
+  },
+  "compression_baseline": {
+    "model_size_kb": 3352.8,
+    "avg_inference_time_ms_full_test_set": 135.982,
+    "avg_inference_time_per_row_us": 257.541,
+    "inference_hardware": "GPU",
+    "total_params": 283905,
+    "trainable_params": 283905
+  },
+  "saved_on": "2026-07-24 21:23:59"
+}
