@@ -1,0 +1,6 @@
+Technique,Size (KB),Size Δ%,Test MAE,MAE Δ%,Test RMSE,Test MAPE (%),Format
+"Baseline (full precision, full size)",1123.3359375,0.0,14853.981770833334,0.0,19235.873117153656,2.385639891942968,.keras (no optimizer state)
+"Technique 1: Pruning (50% sparsity, seed=42)",616.26953125,-45.13933804864139,18119.152994791668,21.981790972503344,22209.541174974387,3.022122830575376,".keras, gzip-compressed (raw size unchanged, +0.0% - see Step 4)"
+Technique 2: Quantization (dynamic-range int8),314.0546875,-72.0426742334147,14966.203006628788,0.7554959843548956,19331.201199078296,2.4049473941989463,.tflite (real conversion; accuracy simulated - see Step 5/6)
+"Technique 3: Distillation (96-unit student, seed=42)",190.2158203125,-83.06688017692836,15920.418383049242,7.1794662782602785,19807.227410963184,2.5862751401281416,.keras (no optimizer state)
+Combination: Distillation (96-unit) + Quantization (int8),63.4453125,-94.3520624256713,15847.471709280304,6.68837456363213,19721.93227204044,2.5751563965489894,.tflite (real conversion; accuracy simulated - see Step 9/10)
