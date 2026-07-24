@@ -1,0 +1,47 @@
+LSTM Compression - Final Summary
+=====================================
+
+Baseline model: 1123.3 KB, Test MAE 14,854, MAPE 2.39%
+
+Technique 1 (Pruning, 50% sparsity, seed=42):
+  Size (gzip): 616.3 KB (-45.1% vs baseline; raw .keras size unchanged, +0.0%)
+  Test MAE: 18,119 (+22.0%)
+  Finding: strictly dominated by Technique 3 on both size and accuracy - not recommended.
+
+Technique 2 (Quantization, dynamic-range int8):
+  Size: 314.1 KB (-72.0%)
+  Test MAE: 14,966 (+0.8%)
+  Finding: best accuracy-safety of all techniques; near-zero cost for large compression.
+
+Technique 3 (Distillation, 96-unit student, seed=42):
+  Size: 190.2 KB (-83.1%)
+  Test MAE: 15,920 (+7.2%)
+  Finding: largest single-technique compression; moderate accuracy cost. Selected as the
+  best of 4 tested student sizes (32/64/96/128 units) - see Step 7 exploration.
+
+Combination (96-unit Distillation + dynamic-range int8 Quantization):
+  Size: 63.4 KB (-94.4%)
+  Test MAE: 15,847 (+6.7%)
+  Finding: best compression of ALL variants, and slightly BETTER accuracy than Technique 3
+  alone (+6.7% vs +7.2%) - quantization's marginal
+  cost on top of distillation was negligible, unlike XGBoost's combination which showed a
+  net size REGRESSION due to JSON serialization overhead. Confirmed non-additive interaction
+  on size (quantizing the full model gave -71.9%; quantizing the already-small 96-unit
+  student gave a smaller -65.7% relative benefit), attributed to fixed per-tensor
+  quantization metadata overhead mattering proportionally more on a smaller model.
+
+RECOMMENDATION: No single technique dominates on both axes, unlike XGBoost. Two
+context-dependent final candidates are provided:
+
+  1. lstm_final_max_compression.tflite (Combination) - RECOMMENDED as the primary choice
+     for most deployment scenarios (e.g. edge devices, storage/bandwidth-constrained
+     contexts): -94.4% size for a well-quantified +6.7% MAE cost, given this project's
+     forecasting task (once-daily electricity demand) has no strict real-time accuracy
+     requirement that a modest MAE increase would violate.
+
+  2. lstm_final_best_accuracy.tflite (Technique 2 alone) - recommended instead if accuracy
+     is paramount and compression is secondary: -71.9% size for only +0.8% MAE cost.
+
+Both are legitimate, well-evidenced choices; the decision between them is a genuine
+deployment-context trade-off, not an obvious win for one option, unlike the XGBoost
+compression notebook where Technique 1 alone dominated on every axis.
