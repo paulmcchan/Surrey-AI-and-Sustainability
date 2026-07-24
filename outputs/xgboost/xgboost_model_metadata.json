@@ -1,0 +1,31 @@
+{
+  "model_type": "XGBoost (XGBRegressor)",
+  "xgboost_version": "3.3.0",
+  "random_seed": 42,
+  "hyperparameters": {
+    "max_depth": 2,
+    "eta": 0.4,
+    "subsample": 0.8,
+    "colsample_bytree": 0.6,
+    "n_estimators": 122
+  },
+  "training_data": "train + validation combined (2009-01-31 to 2022-12-31)",
+  "training_rows": 5083,
+  "test_period": "2023-01-01 to 2024-06-11",
+  "test_rows": 528,
+  "final_training_time_seconds": 0.102,
+  "test_set_metrics": {
+    "mae": 29690.64,
+    "rmse": 35013.99,
+    "mape": 4.881
+  },
+  "saved_on": "2026-07-24 20:42:17",
+  "compression_baseline": {
+    "model_size_kb": 118.2,
+    "avg_inference_time_ms_full_test_set": 3.19,
+    "avg_inference_time_per_row_us": 6.042,
+    "total_trees": 122,
+    "total_nodes": 854,
+    "total_leaves": 488
+  }
+}
